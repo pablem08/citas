@@ -1,6 +1,6 @@
 import React, { Fragment, useState } from 'react';
-import uuid from 'uuid/v4'
-const Forumulario = () => {
+import { v4 as uuidv4 } from 'uuid'
+const Forumulario = ({crearCita}) => {
 
     // Crear State de Citas
     const [cita, actualizarCita] = useState({
@@ -36,11 +36,17 @@ const Forumulario = () => {
         // Eliminar el mensaje previo
         actualizarError(false);
         // Asignar un ID
-        cita.id = uuid();
-        console.log(cita);
+        cita.id = uuidv4();
         // Crear una Cita
-
+            crearCita(cita);
         // Reiniciar el form
+        actualizarCita({
+            mascota: '',
+            propietario: '',
+            fecha: '',
+            hora: '',
+            sintomas: ''
+        })
     }
     return (
         <Fragment>

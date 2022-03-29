@@ -1,10 +1,28 @@
-import React, { Fragment, useState } from "react";
+import React, { Fragment, useState, useEffect } from "react";
 import Forumulario from "./components/Formulario";
 import Cita from "./components/Cita";
 
+
 function App() {
+
+  // Citas en el Local storage
+  let citasIniciales = JSON.parse(localStorage.getItem('citas'));
+  if (!citasIniciales) {
+    citasIniciales = [];
+  }
+
   // Arreglo de Citas
-  const [citas, guardarCitas] = useState([]);
+  const [citas, guardarCitas] = useState(citasIniciales);
+
+  // Use Effect para realizar ciertas operaciones cuando el state cambia
+  useEffect(() => {
+    let citasIniciales = JSON.parse(localStorage.getItem('citas'));
+    if (citasIniciales) {
+      localStorage.setItem('citas', JSON.stringify(citas))
+    } else {
+      localStorage.setItem('citas', JSON.stringify([]));
+    }
+  }, [citas]);
 
   // Funcion que tome las citas actuales y agregue la nueva
   const crearCita = (cita) => {
@@ -39,5 +57,6 @@ function App() {
     </Fragment>
   );
 }
+
 
 export default App;
